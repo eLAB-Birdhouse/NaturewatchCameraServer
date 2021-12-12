@@ -10,7 +10,7 @@ class ContentTypeSelector extends React.Component {
                     <input type="checkbox" onClick={this.props.onToggle}/>
                     <span className="slider round"></span>
                 </label>
-                <p>Video</p>
+                <p>Vidéo</p>
             </div>
         );
     }
