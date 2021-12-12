@@ -54,4 +54,5 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v2.3.0
       with:
+        name: electrolab-camera.img
         path: electrolab-camera.img

@@ -15,14 +15,14 @@ class CameraFeed extends React.Component {
 
     activeFeed() {
         return (
-            <img src="/api/feed" alt="Camera feed"/>
+            <img src="/api/feed" alt="Flux de la caméra"/>
         );
     }
 
     inactiveFeed() {
         return (
            <div id="inactive-feed">
-               <span onClick={this.props.onClick}><h2>Pause de la prévisualisation <br/>pour économiser de l'énergie. Appuyer pour rafraîchir.</h2></span>
+               <span onClick={this.props.onClick}><h2>Mise en pause de la prévisualisation <br/>afin d'économiser de l'énergie. Appuyer pour rafraîchir.</h2></span>
            </div>
         )
     }

@@ -23,7 +23,7 @@ class ContentDownload extends React.Component {
             <ButtonGroup aria-label="download">
                 <Button variant="primary" disabled={this.props.isDownloading} onClick={this.props.onDownloadAll}>Tout télécharger</Button>
                 <Button variant="primary" disabled={this.props.isDownloading} onClick={this.props.onDownload}>Télécharger la sélection</Button>
-                <Button variant="primary" onClick={this.props.onClearSelection}>Cancel</Button>
+                <Button variant="primary" onClick={this.props.onClearSelection}>Annuler</Button>
             </ButtonGroup>
         );
     }

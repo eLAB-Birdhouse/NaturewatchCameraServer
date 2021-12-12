@@ -231,7 +231,7 @@ class GalleryComponent extends React.Component {
                 </Row>
                 <Row>
                     <Col xs={6}>
-                        <Link to="/" className="btn btn-secondary">Back</Link>
+                        <Link to="/" className="btn btn-secondary">Retour</Link>
                     </Col>
                     <Col xs={6}>
                         <ContentDelete

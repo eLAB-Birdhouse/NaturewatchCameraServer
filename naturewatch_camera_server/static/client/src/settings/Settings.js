@@ -85,7 +85,7 @@ class Settings extends React.Component {
                     aria-expanded="false"
                     className="short"
                 >
-                    Retour en arrière
+                    Retour
                 </Button>
             )
         }
