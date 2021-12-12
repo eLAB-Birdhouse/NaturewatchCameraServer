@@ -31,7 +31,7 @@ jobs:
       run: pushd repository/naturewatch_camera_server/static/client && npm i -y && npm run build && popd
 
     - name: Download Raspbian Image
-      run: cd repository/os/image && wget -q -c --trust-server-names 'https://downloads.raspberrypi.org/raspbian_lite_latest'
+      run: cd repository/os/image && wget -q -c --trust-server-names 'https://downloads.raspberrypi.org/raspios_lite_armhf_latest'
 
     - name: Update CustomPiOS Paths
       run: cd repository/os && ../../CustomPiOS/src/update-custompios-paths
@@ -43,14 +43,14 @@ jobs:
       run: export BASE_IMAGE_ENLARGEROOT=1200 && export AUTO_HOTSPOT_NAME=MyNaturewatch && export AUTO_HOTSPOT_PASSWORD=badgersandfoxes && sudo modprobe loop && cd repository/os && sudo bash -x ./build_dist
 
     - name: Copy Output
-      run: cp ${{ github.workspace }}/repository/os/workspace/*-raspbian-buster-lite.img mynaturewatch-camera.img
+      run: cp ${{ github.workspace }}/repository/os/workspace/*.img electrolab-camera.img
 
     - name: Zip Output
-      run: gzip mynaturewatch-camera.img
+      run: gzip electrolab-camera.img
     - uses: actions/upload-artifact@v1
       with:
-        name: mynaturewatch-camera.img.gz
-        path: mynaturewatch-camera.img.gz
+        name: electrolab-camera.img.gz
+        path: electrolab-camera.img.gz
 
     - name: Create Release
       id: create_release
@@ -60,7 +60,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ github.ref }}
-        release_name: My Naturewatch Camera ${{ github.ref }}
+        release_name: electrolab - connected birdhouse ${{ github.ref }}
         draft: true
         prerelease: false
 
@@ -72,6 +72,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-        asset_path: mynaturewatch-camera.img.gz
-        asset_name: mynaturewatch-camera.img.gz
+        asset_path: electrolab-camera.img.gz
+        asset_name: electrolab-camera.img.gz
         asset_content_type: application/octet-stream
