@@ -10,13 +10,15 @@ data = Blueprint('data', __name__)
 
 @data.route('/photos')
 def get_photos():
-    photos_list = construct_directory_list(current_app, current_app.user_config["photos_path"])
+    photos_list = construct_directory_list(
+        current_app, current_app.user_config["photos_path"])
     return Response(json.dumps(photos_list), mimetype='application/json')
 
 
 @data.route('/videos')
 def get_videos():
-    videos_list = construct_directory_list(current_app, current_app.user_config["videos_path"])
+    videos_list = construct_directory_list(
+        current_app, current_app.user_config["videos_path"])
     return Response(json.dumps(videos_list), mimetype='application/json')
 
 
@@ -71,7 +73,8 @@ def delete_video(filename):
 def get_all_files(app, src_path):
     # just for now... we should take an array of file names
     src_list = construct_directory_list(app, src_path)
-    paths = list(map(lambda fn: {'filename': os.path.join(src_path, fn), 'arcname': fn}, src_list))
+    paths = list(map(lambda fn: {'filename': os.path.join(
+        src_path, fn), 'arcname': fn}, src_list))
     return paths
 
 
@@ -80,7 +83,8 @@ def download_videos():
     videos_path = current_app.user_config["videos_path"]
     if request.is_json:
         body = request.get_json()
-        paths = list(map(lambda fn: {'filename': os.path.join(videos_path, fn), 'arcname': fn}, body["paths"]))
+        paths = list(map(lambda fn: {'filename': os.path.join(
+            videos_path, fn), 'arcname': fn}, body["paths"]))
     else:
         paths = get_all_files(current_app, videos_path)
     return Response(ZipfileGenerator(paths).get(), mimetype='application/zip')
@@ -91,17 +95,20 @@ def download_photos():
     photos_path = current_app.user_config["photos_path"]
     if request.is_json:
         body = request.get_json()
-        paths = list(map(lambda fn: {'filename': os.path.join(photos_path, fn), 'arcname': fn}, body["paths"]))
+        paths = list(map(lambda fn: {'filename': os.path.join(
+            photos_path, fn), 'arcname': fn}, body["paths"]))
     else:
         paths = get_all_files(current_app, photos_path)
     return Response(ZipfileGenerator(paths).get(), mimetype='application/zip')
 
 
 def construct_directory_list(app, path):
-    files = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
+    files = [f for f in os.listdir(
+        path) if os.path.isfile(os.path.join(path, f))]
     files = [f for f in files if f.lower().endswith(('.jpg', '.mp4'))]
     files = [f for f in files if not f.lower().startswith('thumb_')]
-    files.sort(key=lambda f: os.path.getmtime(os.path.join(get_correct_filepath(app, f))), reverse=True)
+    files.sort(key=lambda f: os.path.getmtime(
+        os.path.join(get_correct_filepath(app, f))), reverse=True)
     return files
 
 

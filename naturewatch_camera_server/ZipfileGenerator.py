@@ -3,6 +3,7 @@ from zipfile import ZipFile, ZipInfo, ZIP_DEFLATED
 
 import os
 
+
 class ZipfileGenerator():
 
     class UnseekableStream(RawIOBase):
@@ -25,10 +26,10 @@ class ZipfileGenerator():
 
     # Constructor
     def __init__(self,
-                 paths = [], # { 'filename':'', 'arcname':'' }
-                 chunk_size = 0x8000):
+                 paths=[],  # { 'filename':'', 'arcname':'' }
+                 chunk_size=0x8000):
 
-        self.paths      = paths
+        self.paths = paths
         self.chunk_size = chunk_size
 
     # Generator
@@ -44,14 +45,16 @@ class ZipfileGenerator():
                     if len(path['arcname']) == 0:
                         path['arcname'] = path['filename']
 
-                    z_info = ZipInfo.from_file(path['filename'], path['arcname'])
+                    z_info = ZipInfo.from_file(
+                        path['filename'], path['arcname'])
 
-                    # it's not worth the resources, achieves max 0.1% on JPEGs...
-                    #z_info.compress_type = ZIP_DEFLATED
+                    # it's not worth the resources, achieves max 0.1% on JPEGs
+                    # z_info.compress_type = ZIP_DEFLATED
 
                     # should we try to fix the disk timestamps?
-                    # or should it be solved by setting the system time with the browser time?
-                    
+                    # or should it be solved by setting the system time
+                    # with the browser time?
+
                     with open(path['filename'], 'rb') as entry, zf.open(z_info, mode='w') as dest:
 
                         for chunk in iter(lambda: entry.read(self.chunk_size), b''):
@@ -65,4 +68,3 @@ class ZipfileGenerator():
 
         # ZipFile was closed: get the final bytes
         yield output.get()
-

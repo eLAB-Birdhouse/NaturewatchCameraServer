@@ -1,4 +1,4 @@
-#TODO: create "getSpace" api call when filesaver is global 
+# TODO: create "getSpace" api call when filesaver is global
 
 
 from flask import Blueprint, Response, request, json
@@ -33,7 +33,8 @@ def generate_mjpg(camera_controller):
         time.sleep(1)
     while camera_controller.is_alive():
         latest_frame = camera_controller.get_image_binary()
-        response = b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + bytearray(latest_frame) + b'\r\n'
+        response = b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + \
+            bytearray(latest_frame) + b'\r\n'
         yield(response)
         time.sleep(0.2)
 
@@ -55,7 +56,8 @@ def generate_jpg(camera_controller):
         time.sleep(1)
     try:
         latest_frame = camera_controller.get_image_binary()
-        response = b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + bytearray(latest_frame) + b'\r\n'
+        response = b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + \
+            bytearray(latest_frame) + b'\r\n'
         return response
     except Exception as e:
         # TODO send a error.jpg image as the frame instead.
@@ -72,12 +74,14 @@ def settings_handler():
     :return: settings json object
     """
     if request.method == 'GET':
-        settings = construct_settings_object(current_app.camera_controller, current_app.change_detector)
+        settings = construct_settings_object(
+            current_app.camera_controller, current_app.change_detector)
         return Response(json.dumps(settings), mimetype='application/json')
     elif request.method == 'POST':
         settings = request.json
         if "rotation" in settings:
-            current_app.camera_controller.set_camera_rotation(settings["rotation"])
+            current_app.camera_controller.set_camera_rotation(
+                settings["rotation"])
         if "sensitivity" in settings:
             if settings["sensitivity"] == "less":
                 current_app.change_detector.set_sensitivity(current_app.user_config["less_sensitivity"],
@@ -97,11 +101,13 @@ def settings_handler():
                 current_app.camera_controller.set_exposure(settings["exposure"]["shutter_speed"],
                                                            settings["exposure"]["iso"])
         if "timelapse" in settings:
-            current_app.logger.info("Changing timelapse settings to " + str(settings["timelapse"]))
+            current_app.logger.info(
+                "Changing timelapse settings to " + str(settings["timelapse"]))
             current_app.change_detector.timelapse_active = settings["timelapse"]["active"]
             current_app.change_detector.timelapse = settings["timelapse"]["interval"]
-        
-        new_settings = construct_settings_object(current_app.camera_controller, current_app.change_detector)
+
+        new_settings = construct_settings_object(
+            current_app.camera_controller, current_app.change_detector)
         return Response(json.dumps(new_settings), mimetype='application/json')
 
 

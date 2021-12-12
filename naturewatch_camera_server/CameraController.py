@@ -57,7 +57,8 @@ class CameraController(threading.Thread):
             self.initialise_picamera()
         else:
             # Use webcam
-            self.logger.info("CameraController: picamera module not found. Using oCV VideoCapture instead.")
+            self.logger.info(
+                "CameraController: picamera module not found. Using oCV VideoCapture instead.")
             self.capture = None
             self.initialise_webcam()
 
@@ -76,31 +77,37 @@ class CameraController(threading.Thread):
                         self.picamera_md_stream.__next__()
                         self.image = self.picamera_md_output.array
                         if self.image is None:
-                            self.logger.warning("CameraController: got empty image.")
+                            self.logger.warning(
+                                "CameraController: got empty image.")
                         time.sleep(0.01)
                     except Exception as e:
-                        self.logger.error("CameraController: picamera update error.")
+                        self.logger.error(
+                            "CameraController: picamera update error.")
                         self.logger.exception(e)
                         self.initialise_picamera()
                         time.sleep(0.02)
 
                 else:
                     try:
-                    # Get image from webcam
+                        # Get image from webcam
                         ret, self.raw_image = self.capture.read()
                         if self.raw_image is None:
-                            self.logger.warning("CameraController: got empty webcam image.")
+                            self.logger.warning(
+                                "CameraController: got empty webcam image.")
                         else:
-                            self.image = imutils.resize(self.raw_image, width=self.md_width, height=self.md_height)
+                            self.image = imutils.resize(
+                                self.raw_image, width=self.md_width, height=self.md_height)
                         time.sleep(0.01)
                     except Exception as e:
-                        self.logger.error("CameraController: webcam update error.")
+                        self.logger.error(
+                            "CameraController: webcam update error.")
                         self.logger.exception(e)
                         self.initialise_webcam()
                         time.sleep(0.02)
 
             except KeyboardInterrupt:
-                self.logger.info("CameraController: received KeyboardInterrupt,  shutting down ...")
+                self.logger.info(
+                    "CameraController: received KeyboardInterrupt, shutting down ...")
                 self.stop()
 
     # Stop thread
@@ -140,7 +147,8 @@ class CameraController(threading.Thread):
     def start_video_stream(self):
         if picamera_exists:
             self.picamera_video_stream.clear()
-            self.camera.start_recording(self.picamera_video_stream, format='h264', bitrate=self.video_bitrate)
+            self.camera.start_recording(
+                self.picamera_video_stream, format='h264', bitrate=self.video_bitrate)
             self.logger.debug('CameraController: recording started')
 
     def stop_video_stream(self):
@@ -168,10 +176,12 @@ class CameraController(threading.Thread):
         if picamera_exists:
             # TODO: understand the decode. Is another more intuitive way possible?
             self.picamera_photo_stream = io.BytesIO()
-            self.camera.capture(self.picamera_photo_stream, format='jpeg', use_video_port=self.use_video_port)
+            self.camera.capture(self.picamera_photo_stream,
+                                format='jpeg', use_video_port=self.use_video_port)
             self.picamera_photo_stream.seek(0)
             # "Decode" the image from the stream, preserving colour
-            s = cv2.imdecode(np.fromstring(self.picamera_photo_stream.getvalue(), dtype=np.uint8), 1)
+            s = cv2.imdecode(np.fromstring(
+                self.picamera_photo_stream.getvalue(), dtype=np.uint8), 1)
 
             if s is not None:
                 return s.copy()
@@ -181,7 +191,8 @@ class CameraController(threading.Thread):
         else:
             ret, raw_image = self.capture.read()
             if raw_image is None:
-                self.logger.error("CameraController: webcam returned empty hires image.")
+                self.logger.error(
+                    "CameraController: webcam returned empty hires image.")
                 return None
             else:
                 return raw_image.copy()
@@ -199,7 +210,8 @@ class CameraController(threading.Thread):
         self.camera = picamera.PiCamera()
         # Check for module revision
         # TODO: set maximum resolution based on module revision
-        self.logger.debug('CameraController: camera module revision {} detected.'.format(self.camera.revision))
+        self.logger.debug('CameraController: camera module revision {} detected.'.format(
+            self.camera.revision))
 
         # Set camera parameters
         self.camera.framerate = self.config["frame_rate"]
@@ -219,7 +231,8 @@ class CameraController(threading.Thread):
 
 # TODO: use correct port fitting the requested resolution
         # Set up low res stream for motion detection
-        self.picamera_md_output = picamera.array.PiRGBArray(self.camera, size=(self.md_width, self.md_height))
+        self.picamera_md_output = picamera.array.PiRGBArray(
+            self.camera, size=(self.md_width, self.md_height))
         self.picamera_md_stream = self.camera.capture_continuous(self.picamera_md_output, format="bgr",
                                                                  use_video_port=True, splitter_port=2,
                                                                  resize=(self.md_width, self.md_height))
@@ -234,7 +247,8 @@ class CameraController(threading.Thread):
                                                                  bitrate=self.video_bitrate,
                                                                  seconds=self.config["video_duration_before_motion"] +
                                                                  self.config["video_duration_after_motion"])
-        self.logger.debug('CameraController: circular stream prepared for video.')
+        self.logger.debug(
+            'CameraController: circular stream prepared for video.')
 
         time.sleep(2)
 
@@ -325,6 +339,7 @@ class CameraController(threading.Thread):
     @staticmethod
     def update_config(new_config, config_path):
         with open(config_path, 'w') as json_file:
-            contents = json.dumps(new_config, sort_keys=True, indent=4, separators=(',', ': '))
+            contents = json.dumps(new_config, sort_keys=True,
+                                  indent=4, separators=(',', ': '))
             json_file.write(contents)
         return new_config
