@@ -30,6 +30,7 @@ jobs:
     - name: Build React frontend
       run: pushd repository/naturewatch_camera_server/static/client && npm i -y && npm run build && popd
 
+    # Raspbian build OS
     - name: Download Raspbian Image
       run: cd repository/os/image && wget -q -c --trust-server-names 'https://downloads.raspberrypi.org/raspbian_lite_latest'
 
@@ -44,40 +45,8 @@ jobs:
 
     - name: Copy Output
       run: cp ${{ github.workspace }}/repository/os/workspace/*.img electrolab-camera.img
-
-    - name: Zip Output
-      run: gzip electrolab-camera.img
-    - uses: actions/upload-artifact@v1
-      with:
-        name: electrolab-camera.img.gz
-        path: electrolab-camera.img.gz
     
     - name: Upload artifact
       uses: actions/upload-artifact@v2.3.0
       with:
-        name: RPi_image
-        path: electrolab-camera.img.gz
-
-#     - name: Create Release
-#       id: create_release
-#       uses: actions/create-release@v1
-#       if: startsWith(github.ref, 'refs/tags/v')
-#       env:
-#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#       with:
-#         tag_name: ${{ github.ref }}
-#         release_name: electrolab - connected birdhouse ${{ github.ref }}
-#         draft: true
-#         prerelease: false
-
-#     - name: Upload Release
-#       id: upload-release-asset
-#       uses: actions/upload-release-asset@v1
-#       if: startsWith(github.ref, 'refs/tags/v')
-#       env:
-#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#       with:
-#         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-#         asset_path: electrolab-camera.img.gz
-#         asset_name: electrolab-camera.img.gz
-#         asset_content_type: application/octet-stream
+        path: electrolab-camera.img
