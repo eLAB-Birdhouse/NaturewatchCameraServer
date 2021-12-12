@@ -70,7 +70,7 @@ class ExposureSetting extends React.Component {
             return (
                 <div>
                     <label htmlFor="shutter-speed" className="shutter-speed-label">
-                        Fixed Shutter Speed: <span>{this.renderShutterSpeedFraction(this.props.shutterSpeed)}</span>
+                        Vitesse d'obturation : <span>{this.renderShutterSpeedFraction(this.props.shutterSpeed)}</span>
                     </label>
                     <br/>
                     <input
@@ -93,8 +93,8 @@ class ExposureSetting extends React.Component {
         return (
             <div>
                 <ToggleButtonGroup name="exposure" value={this.props.mode} onChange={this.props.onModeChange}>
-                    <ToggleButton type="radio" value="auto">Auto</ToggleButton>
-                    <ToggleButton type="radio" value="off">Manual</ToggleButton>
+                    <ToggleButton type="radio" value="auto">Automatique</ToggleButton>
+                    <ToggleButton type="radio" value="off">Manuelle</ToggleButton>
                 </ToggleButtonGroup>
                 <br/>
                 {this.renderDetailedSettings()}

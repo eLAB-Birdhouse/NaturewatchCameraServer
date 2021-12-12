@@ -8,7 +8,7 @@ class ContentDelete extends React.Component {
         super(props);
         this.state = {
             isDeleteActive: false,
-            deleteAllText: "Delete All",
+            deleteAllText: "Tout supprimer",
         };
         this.onDeleteAll = this.onDeleteAll.bind(this);
         this.onDelete = this.onDelete.bind(this);
@@ -25,7 +25,7 @@ class ContentDelete extends React.Component {
 
     renderSelectButton() {
         return(
-            <Button variant="primary" onClick={() => {this.props.onSelectStart('delete')}}>Delete</Button>
+            <Button variant="primary" onClick={() => {this.props.onSelectStart('delete')}}>Supprimer</Button>
         );
     }
 
@@ -33,7 +33,7 @@ class ContentDelete extends React.Component {
         if (this.state.isDeleteActive) {
             this.props.onDeleteAll();
             this.setState({
-                deleteAllText: "Delete All",
+                deleteAllText: "Tout supprimer",
                 isDeleteActive: false,
             });
         }
@@ -47,14 +47,14 @@ class ContentDelete extends React.Component {
 
     onClearSelection() {
         this.setState({
-            deleteAllText: "Delete All",
+            deleteAllText: "Tout supprimer",
             isDeleteActive: false,
         }, this.props.onClearSelection);
     }
 
     onDelete() {
         this.setState({
-            deleteAllText: "Delete All",
+            deleteAllText: "Tout supprimer",
             isDeleteActive: false,
         }, this.props.onDelete);
     }
@@ -63,8 +63,8 @@ class ContentDelete extends React.Component {
         return(
             <ButtonGroup aria-label="delete">
                 <Button variant="primary" onClick={this.onDeleteAll}>{this.state.deleteAllText}</Button>
-                <Button variant="primary" onClick={this.onDelete}>Delete Selected</Button>
-                <Button variant="primary" onClick={this.onClearSelection}>Cancel</Button>
+                <Button variant="primary" onClick={this.onDelete}>Supprimer la sélection</Button>
+                <Button variant="primary" onClick={this.onClearSelection}>Annuler</Button>
             </ButtonGroup>
         );
     }

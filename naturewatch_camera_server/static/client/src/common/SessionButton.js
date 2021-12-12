@@ -11,11 +11,11 @@ class SessionButton extends React.Component {
     renderText() {
         if (this.props.sessionStatus === this.props.type) {
             return (
-                <span>{"Stop " + this.props.type + " capture"}</span>
+                <span>{"Arrêter la capture (" + this.props.type + ")"}</span>
             );
         } else {
             return (
-                <span>{"Start " + this.props.type + " capture"}</span>
+                <span>{"Démarrer la capture (" + this.props.type + ")"}</span>
             );
         }
     }

@@ -85,7 +85,7 @@ class Settings extends React.Component {
                     aria-expanded="false"
                     className="short"
                 >
-                    Back
+                    Retour en arrière
                 </Button>
             )
         }
@@ -231,13 +231,13 @@ class Settings extends React.Component {
                     aria-expanded={this.props.isOpen}
                     className="settings-button"
                 >
-                    Settings
+                    Paramètres
                 </Button>
                 <Collapse in={this.props.isOpen}>
                     <Accordion>
                         <Card>
                             <Accordion.Toggle as={Card.Header} eventKey={1}>
-                                Sensitivity
+                                Sensibilité
                             </Accordion.Toggle>
                             <Accordion.Collapse eventKey={1}>
                                 <Card.Body>
@@ -250,7 +250,7 @@ class Settings extends React.Component {
                         </Card>
                         <Card>
                             <Accordion.Toggle as={Card.Header} eventKey={2}>
-                                Image Orientation
+                                Orientation de l'image
                             </Accordion.Toggle>
                             <Accordion.Collapse eventKey={2}>
                                 <Card.Body>
@@ -258,14 +258,14 @@ class Settings extends React.Component {
                                         variant="primary"
                                         onClick={this.onImageOrientationChange}
                                     >
-                                        Flip 180
+                                        Rotation de 180°
                                     </Button>
                                 </Card.Body>
                             </Accordion.Collapse>
                         </Card>
                         <Card>
                             <Accordion.Toggle as={Card.Header} eventKey={3}>
-                                Exposure
+                                Exposition
                             </Accordion.Toggle>
                             <Accordion.Collapse eventKey={3}>
                                 <Card.Body>
@@ -281,7 +281,7 @@ class Settings extends React.Component {
                         </Card>
                         <Card>
                             <Accordion.Toggle as={Card.Header} eventKey={4}>
-                                Timelapse Mode
+                                Mode timelapse
                             </Accordion.Toggle>
                             <Accordion.Collapse eventKey={4}>
                                 <Card.Body>

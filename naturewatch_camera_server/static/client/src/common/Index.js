@@ -55,11 +55,11 @@ class Index extends React.Component {
     captureStatus() {
         if (this.state.sessionStatus.mode === "inactive") {
             return (
-                <p className="feed-status">Capture is <u>off</u></p>
+                <p className="feed-status">La capture est <u>arrêtée</u></p>
             );
         } else {
             return (
-                <p className="feed-status">Capture is <u>on</u></p>
+                <p className="feed-status">La capture est <u>en cours</u></p>
             );
         }
     }
@@ -210,7 +210,7 @@ class Index extends React.Component {
                                 onTimelapseActiveChange={this.onTimelapseActiveChange}
                                 isTimelapseActive={this.state.isTimelapseActive}
                             />
-                            {!this.state.isSettingsOpen && <Link to="/gallery" className="btn btn-secondary">Gallery</Link>}
+                            {!this.state.isSettingsOpen && <Link to="/gallery" className="btn btn-secondary">Galerie</Link>}
                         </Col>
                     </Row>
                 </Container>

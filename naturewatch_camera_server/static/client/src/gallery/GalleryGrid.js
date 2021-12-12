@@ -78,14 +78,14 @@ class GalleryGrid extends React.Component {
                     {this.state.activeContent.endsWith(".jpg") &&
                         <div className="footer-content">
                             <p className="mr-auto">
-                                <a href={this.state.activeContent} download={this.state.activeContent.substring(this.state.activeContent.lastIndexOf('/')+1)}>Download Photo</a>
+                                <a href={this.state.activeContent} download={this.state.activeContent.substring(this.state.activeContent.lastIndexOf('/')+1)}>Télécharger la photo</a>
                             </p>
                         </div>
                     }
                     {this.state.activeContent.endsWith(".mp4") &&
                         <div className="footer-content">
                             <p className="mr-auto">
-                               <a href={this.state.activeContent} download={this.state.activeContent.substring(this.state.activeContent.lastIndexOf('/')+1)}>Download Video</a>
+                               <a href={this.state.activeContent} download={this.state.activeContent.substring(this.state.activeContent.lastIndexOf('/')+1)}>Télécharger la vidéo</a>
                             </p>
                         </div>
                     }
@@ -102,7 +102,7 @@ class GalleryGrid extends React.Component {
             return (
                 <video controls>
                     <source src={this.state.activeContent} type="video/mp4"/>
-                    Your browser does not support the video tag.
+                    Votre navigateur ne supporte pas le tag vidéo.
                 </video>
             );
         } else {

@@ -1,5 +1,5 @@
 [Unit]
-Description=My Naturewatch Camera Server
+Description=electroLAB Birdhouse Server
 After=multi-user.target
 
 [Service]
