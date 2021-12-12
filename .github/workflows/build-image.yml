@@ -51,27 +51,33 @@ jobs:
       with:
         name: electrolab-camera.img.gz
         path: electrolab-camera.img.gz
-
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      if: startsWith(github.ref, 'refs/tags/v')
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2.3.0
       with:
-        tag_name: ${{ github.ref }}
-        release_name: electrolab - connected birdhouse ${{ github.ref }}
-        draft: true
-        prerelease: false
+        name: RPi_image
+        path: electrolab-camera.img.gz
 
-    - name: Upload Release
-      id: upload-release-asset
-      uses: actions/upload-release-asset@v1
-      if: startsWith(github.ref, 'refs/tags/v')
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-        asset_path: electrolab-camera.img.gz
-        asset_name: electrolab-camera.img.gz
-        asset_content_type: application/octet-stream
+#     - name: Create Release
+#       id: create_release
+#       uses: actions/create-release@v1
+#       if: startsWith(github.ref, 'refs/tags/v')
+#       env:
+#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       with:
+#         tag_name: ${{ github.ref }}
+#         release_name: electrolab - connected birdhouse ${{ github.ref }}
+#         draft: true
+#         prerelease: false
+
+#     - name: Upload Release
+#       id: upload-release-asset
+#       uses: actions/upload-release-asset@v1
+#       if: startsWith(github.ref, 'refs/tags/v')
+#       env:
+#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       with:
+#         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+#         asset_path: electrolab-camera.img.gz
+#         asset_name: electrolab-camera.img.gz
+#         asset_content_type: application/octet-stream
