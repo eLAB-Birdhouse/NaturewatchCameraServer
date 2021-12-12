@@ -31,7 +31,7 @@ jobs:
       run: pushd repository/naturewatch_camera_server/static/client && npm i -y && npm run build && popd
 
     - name: Download Raspbian Image
-      run: cd repository/os/image && wget -q -c --trust-server-names 'https://downloads.raspberrypi.org/raspios_lite_armhf_latest'
+      run: cd repository/os/image && wget -q -c --trust-server-names 'https://downloads.raspberrypi.org/raspbian_lite_latest'
 
     - name: Update CustomPiOS Paths
       run: cd repository/os && ../../CustomPiOS/src/update-custompios-paths
