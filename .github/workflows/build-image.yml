@@ -7,7 +7,9 @@ jobs:
     steps:
 
     - name: Install Dependencies
-      run: sudo apt-get update && sudo apt install coreutils p7zip-full qemu-user-static
+      run: |
+        sudo apt-get update
+        sudo apt install coreutils p7zip-full qemu-user-static
 
     - name: Checkout CustomPiOS
       uses: actions/checkout@v2
@@ -28,14 +30,22 @@ jobs:
         node-version: 12.x
 
     - name: Build React frontend
-      run: pushd repository/naturewatch_camera_server/static/client && npm i -y && npm run build && popd
+      run: |
+        pushd repository/naturewatch_camera_server/static/client
+        npm i -y
+        npm run build
+        popd
 
     # Raspbian build OS
     - name: Download Raspbian Image
-      run: cd repository/os/image && wget -q -c --trust-server-names 'https://downloads.raspberrypi.org/raspbian_lite_latest'
+      run: |
+        cd repository/os/image
+        wget -q -c --trust-server-names 'https://downloads.raspberrypi.org/raspbian_lite_latest'
 
     - name: Update CustomPiOS Paths
-      run: cd repository/os && ../../CustomPiOS/src/update-custompios-paths
+      run: |
+        cd repository/os
+        ../../CustomPiOS/src/update-custompios-paths
 
     - name: Copy NaturewatchCameraServer to CustomPiOS directory
       run: |
@@ -46,7 +56,14 @@ jobs:
         ls repository/os/modules/naturewatchcamera/filesystem/home/pi/NaturewatchCameraServer
 
     - name: Build Image
-      run: export BASE_IMAGE_ENLARGEROOT=1200 && export AUTO_HOTSPOT_NAME=MyNaturewatch && export AUTO_HOTSPOT_PASSWORD=badgersandfoxes && sudo modprobe loop && cd repository/os && sudo bash -x ./build_dist
+      run: |
+        export BASE_IMAGE_ENLARGEROOT=1200
+        export BASE_IMAGE_RESIZEROOT=200
+        export AUTO_HOTSPOT_NAME=electroLAB_Birdhouse-
+        export AUTO_HOTSPOT_PASSWORD=badgersandfoxes
+        sudo modprobe loop
+        cd repository/os
+        sudo bash -x ./build_dist
 
     - name: Copy Output
       run: cp ${{ github.workspace }}/repository/os/workspace/*.img electrolab-camera.img
