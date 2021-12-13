@@ -67,9 +67,27 @@ jobs:
 
     - name: Copy Output
       run: cp ${{ github.workspace }}/repository/os/workspace/*.img electrolab-camera.img
+
+    - name: Compress the release image with PiShrink
+      run: |
+        sudo apt-get update && sudo apt-get install -y detox tar
+        detox -r -v ./*
+        image_name=$(ls *.img)
+        wget https://raw.githubusercontent.com/Drewsif/PiShrink/master/pishrink.sh
+        sudo bash pishrink.sh -s -Z -a ${image_name}
     
-    - name: Upload artifact
+    - name: Upload the image artifact
       uses: actions/upload-artifact@v2.3.0
       with:
-        name: electrolab-camera.img
-        path: electrolab-camera.img
+        name: release_image_and_bins
+        path: |
+          ./*.img.xz
+          
+        if-no-files-found: error
+        retention-days: 30
+
+    # - name: Upload artifact
+      # uses: actions/upload-artifact@v2.3.0
+      # with:
+      #   name: electrolab-camera.img
+      #   path: electrolab-camera.img

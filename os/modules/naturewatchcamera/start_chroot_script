@@ -36,28 +36,21 @@ echo "$NATUREWATCHCAMERA_VAR"
                         libatlas-base-dev libblas-dev libeigen{2,3}-dev liblapack-dev \
                         gfortran \
                         python2.7-dev python3-dev python-pip python3-pip python python3
- apt-get install -y libilmbase23
- apt-get install -y libopenexr-dev
- apt-get install -y libgstreamer1.0-dev
+ apt-get install -y libilmbase23 libopenexr-dev libgstreamer1.0-dev
  apt install -y gpac
- pip2 install -U pip
- pip3 install -U pip
- pip2 install numpy
- pip3 install numpy
-echo "Installing OpenCV"
-pip3 install opencv-python-headless
+ python -m pip install -U pip numpy
+ echo "Installing OpenCV"
+ python3 -m pip install -U pip numpy opencv-python-headless
 
 pushd /home/pi
 	pushd NaturewatchCameraServer
 
 		echo "Installing repo dependencies"
-		pip3 install -r requirements-pi.txt
+		python3 -m pip install -r requirements-pi.txt
 
 		echo "Adding services"
 		mv helpers/python.naturewatch.service /etc/systemd/system/python.naturewatch.service
 		mv helpers/wifisetup.service /etc/systemd/system/wifisetup.service
-		
-
 	popd
 popd
 
@@ -67,6 +60,8 @@ systemctl enable python.naturewatch.service
 chmod 644 /etc/systemd/system/wifisetup.service
 systemctl enable wifisetup.service
 
+apt-get clean
+apt-get autoremove -y
 unpack /filesystem/home/pi /home/"${BASE_USER}" "${BASE_USER}"
 # Unpack root at the end, so files are modified before
 unpack /filesystem/root /
