@@ -37,7 +37,7 @@ The website is then accessible through its IP address:
 
 If your device has Bonjour installed, you can also use:
 
-    http://mynaturewatchcamera.local/
+    http://electroLAB-Birdhouse.local/
 
 ### Reporting bugs
 
