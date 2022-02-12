@@ -57,7 +57,7 @@ jobs:
 
     - name: Build Image
       run: |
-        export BASE_IMAGE_ENLARGEROOT=1200
+        export BASE_IMAGE_ENLARGEROOT=2000
         export BASE_IMAGE_RESIZEROOT=200
         export AUTO_HOTSPOT_NAME=electroLAB_Birdhouse-
         export AUTO_HOTSPOT_PASSWORD=badgersandfoxes
