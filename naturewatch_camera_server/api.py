@@ -84,27 +84,33 @@ def settings_handler():
                 settings["rotation"])
         if "sensitivity" in settings:
             if settings["sensitivity"] == "less":
-                current_app.change_detector.set_sensitivity(current_app.user_config["less_sensitivity"],
-                                                            current_app.user_config["max_width"])
+                current_app.change_detector.set_sensitivity(
+                    current_app.user_config["less_sensitivity"],
+                    current_app.user_config["max_width"])
             elif settings["sensitivity"] == "default":
-                current_app.change_detector.set_sensitivity(current_app.user_config["min_width"],
-                                                            current_app.user_config["max_width"])
+                current_app.change_detector.set_sensitivity(
+                    current_app.user_config["min_width"],
+                    current_app.user_config["max_width"])
             elif settings["sensitivity"] == "more":
-                current_app.change_detector.set_sensitivity(current_app.user_config["more_sensitivity"],
-                                                            current_app.user_config["max_width"])
+                current_app.change_detector.set_sensitivity(
+                    current_app.user_config["more_sensitivity"],
+                    current_app.user_config["max_width"])
         if "mode" in settings["exposure"]:
             if settings["exposure"]["mode"] == "auto":
                 current_app.camera_controller.auto_exposure()
             elif settings["exposure"]["mode"] == "off":
                 if settings["exposure"]["shutter_speed"] == 0:
                     settings["exposure"]["shutter_speed"] = 5000
-                current_app.camera_controller.set_exposure(settings["exposure"]["shutter_speed"],
-                                                           settings["exposure"]["iso"])
+                current_app.camera_controller.set_exposure(
+                    settings["exposure"]["shutter_speed"],
+                    settings["exposure"]["iso"])
         if "timelapse" in settings:
             current_app.logger.info(
                 "Changing timelapse settings to " + str(settings["timelapse"]))
-            current_app.change_detector.timelapse_active = settings["timelapse"]["active"]
-            current_app.change_detector.timelapse = settings["timelapse"]["interval"]
+            current_app.change_detector.timelapse_active = settings[
+                "timelapse"]["active"]
+            current_app.change_detector.timelapse = settings[
+                "timelapse"]["interval"]
 
         new_settings = construct_settings_object(
             current_app.camera_controller, current_app.change_detector)
@@ -113,7 +119,8 @@ def settings_handler():
 
 def construct_settings_object(camera_controller, change_detector):
     """
-    Construct a dictionary populated with the current settings of the camera controller and change detector.
+    Construct a dictionary populated with the current settings
+    of the camera controller and change detector.
     :param camera_controller: Running camera controller object
     :param change_detector: Running change detector object
     :return: settings dictionary
@@ -124,7 +131,8 @@ def construct_settings_object(camera_controller, change_detector):
         sensitivity = "less"
     elif change_detector.minWidth == current_app.user_config["min_width"]:
         sensitivity = "default"
-    elif change_detector.minWidth == current_app.user_config["more_sensitivity"]:
+    elif change_detector.minWidth == current_app.user_config[
+            "more_sensitivity"]:
         sensitivity = "more"
 
     settings = {
@@ -196,8 +204,14 @@ def update_time(time_string):
         if float(time_string) > 1580317004:
             current_app.change_detector.device_time = float(time_string)
             current_app.change_detector.device_time_start = time.time()
-            return Response('{"SUCCESS": "' + time_string + '"}', status=200, mimetype='application/json')
+            return Response(
+                '{"SUCCESS": "' + time_string + '"}',
+                status=200, mimetype='application/json')
         else:
-            return Response('{"ERROR": "' + time_string + '"}', status=400, mimetype='application/json')
+            return Response(
+                '{"ERROR": "' + time_string + '"}',
+                status=400, mimetype='application/json')
     else:
-        return Response('{"NOT_MODIFIED": "' + time_string + '"}', status=304, mimetype='application/json')
+        return Response(
+            '{"NOT_MODIFIED": "' + time_string + '"}',
+            status=304, mimetype='application/json')

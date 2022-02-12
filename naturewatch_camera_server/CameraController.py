@@ -30,7 +30,8 @@ class CameraController(threading.Thread):
         self.width = self.config["img_width"]
         self.height = self.config["img_height"]
 
-# Image resolution used for motion detection, same aspect ratio as desired image
+# Image resolution used for motion detection,
+# same aspect ratio as desired image
         self.md_width = self.config["md_width"]
         self.md_height = self.md_width * self.height // self.width
 
@@ -58,7 +59,8 @@ class CameraController(threading.Thread):
         else:
             # Use webcam
             self.logger.info(
-                "CameraController: picamera module not found. Using oCV VideoCapture instead.")
+                "CameraController: picamera module not found."
+                " Using oCV VideoCapture instead.")
             self.capture = None
             self.initialise_webcam()
 
@@ -96,7 +98,8 @@ class CameraController(threading.Thread):
                                 "CameraController: got empty webcam image.")
                         else:
                             self.image = imutils.resize(
-                                self.raw_image, width=self.md_width, height=self.md_height)
+                                self.raw_image, width=self.md_width,
+                                height=self.md_height)
                         time.sleep(0.01)
                     except Exception as e:
                         self.logger.error(
@@ -106,8 +109,8 @@ class CameraController(threading.Thread):
                         time.sleep(0.02)
 
             except KeyboardInterrupt:
-                self.logger.info(
-                    "CameraController: received KeyboardInterrupt, shutting down ...")
+                self.logger.info("CameraController: received KeyboardInterrupt"
+                                 ", shutting down ...")
                 self.stop()
 
     # Stop thread
@@ -148,7 +151,8 @@ class CameraController(threading.Thread):
         if picamera_exists:
             self.picamera_video_stream.clear()
             self.camera.start_recording(
-                self.picamera_video_stream, format='h264', bitrate=self.video_bitrate)
+                self.picamera_video_stream, format='h264',
+                bitrate=self.video_bitrate)
             self.logger.debug('CameraController: recording started')
 
     def stop_video_stream(self):
@@ -174,10 +178,12 @@ class CameraController(threading.Thread):
     def get_hires_image(self):
         self.logger.debug("CameraController: hires image requested.")
         if picamera_exists:
-            # TODO: understand the decode. Is another more intuitive way possible?
+            # TODO: understand the decode.
+            # Is another more intuitive way possible?
             self.picamera_photo_stream = io.BytesIO()
-            self.camera.capture(self.picamera_photo_stream,
-                                format='jpeg', use_video_port=self.use_video_port)
+            self.camera.capture(
+                self.picamera_photo_stream, format='jpeg',
+                use_video_port=self.use_video_port)
             self.picamera_photo_stream.seek(0)
             # "Decode" the image from the stream, preserving colour
             s = cv2.imdecode(np.fromstring(
@@ -210,8 +216,9 @@ class CameraController(threading.Thread):
         self.camera = picamera.PiCamera()
         # Check for module revision
         # TODO: set maximum resolution based on module revision
-        self.logger.debug('CameraController: camera module revision {} detected.'.format(
-            self.camera.revision))
+        self.logger.debug(
+            'CameraController: camera module revision {} detected.'.format(
+                self.camera.revision))
 
         # Set camera parameters
         self.camera.framerate = self.config["frame_rate"]
@@ -226,27 +233,32 @@ class CameraController(threading.Thread):
             self.camera.rotation = 0
             self.rotated_camera = False
 
-        self.logger.info('CameraController: camera initialised with a resolution of {} and a framerate of {}'.format(
-            self.camera.resolution, self.camera.framerate))
+        self.logger.info('CameraController: camera initialised with a'
+                         f' resolution of {self.camera.resolution} and'
+                         f' a framerate of {self.camera.framerate}')
 
 # TODO: use correct port fitting the requested resolution
         # Set up low res stream for motion detection
         self.picamera_md_output = picamera.array.PiRGBArray(
             self.camera, size=(self.md_width, self.md_height))
-        self.picamera_md_stream = self.camera.capture_continuous(self.picamera_md_output, format="bgr",
-                                                                 use_video_port=True, splitter_port=2,
-                                                                 resize=(self.md_width, self.md_height))
-        self.logger.debug('CameraController: low res stream prepared with resolution {}x{}.'.format(self.md_width,
-                                                                                                    self.md_height))
+        self.picamera_md_stream = self.camera.capture_continuous(
+            self.picamera_md_output, format="bgr",
+            use_video_port=True, splitter_port=2,
+            resize=(self.md_width, self.md_height))
+        self.logger.debug('CameraController: low res stream prepared with'
+                          f' resolution {self.md_width}x{self.md_height}.')
 
         # Set up high res stream for actual recording
-        # Bitrate has to be specified so size can be calculated from the seconds specified
-        # Unfortunately the effective bitrate depends on the quality-parameter specified with start_recording,
+        # Bitrate has to be specified so size can be calculated
+        # from the seconds specified
+        # Unfortunately the effective bitrate depends on the quality-parameter
+        # specified with start_recording,
         # so the effective duration can not be predicted well
-        self.picamera_video_stream = picamera.PiCameraCircularIO(self.camera,
-                                                                 bitrate=self.video_bitrate,
-                                                                 seconds=self.config["video_duration_before_motion"] +
-                                                                 self.config["video_duration_after_motion"])
+        self.picamera_video_stream = picamera.PiCameraCircularIO(
+            self.camera,
+            bitrate=self.video_bitrate,
+            seconds=self.config["video_duration_before_motion"] +
+            self.config["video_duration_after_motion"])
         self.logger.debug(
             'CameraController: circular stream prepared for video.')
 
@@ -277,16 +289,20 @@ class CameraController(threading.Thread):
                 new_config = self.config
                 new_config["rotate_camera"] = 1
                 module_path = os.path.abspath(os.path.dirname(__file__))
-                self.config = self.update_config(new_config,
-                                                 os.path.join(module_path, self.config["data_path"], 'config.json'))
+                self.config = self.update_config(
+                    new_config,
+                    os.path.join(module_path,
+                                 self.config["data_path"], 'config.json'))
             else:
                 if picamera_exists:
                     self.camera.rotation = 0
                 new_config = self.config
                 new_config["rotate_camera"] = 0
                 module_path = os.path.abspath(os.path.dirname(__file__))
-                self.config = self.update_config(new_config,
-                                                 os.path.join(module_path, self.config["data_path"], 'config.json'))
+                self.config = self.update_config(
+                    new_config,
+                    os.path.join(module_path,
+                                 self.config["data_path"], 'config.json'))
 
     # Set picamera exposure
     def set_exposure(self, shutter_speed, iso):

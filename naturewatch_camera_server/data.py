@@ -26,9 +26,12 @@ def get_videos():
 def get_photo(filename):
     file_path = current_app.user_config["photos_path"] + filename
     if os.path.isfile(os.path.join(file_path)):
-        return send_from_directory(os.path.join('static/data/photos'), filename, mimetype="image/jpg")
+        return send_from_directory(
+            os.path.join('static/data/photos'), filename, mimetype="image/jpg")
     else:
-        return Response("{'NOT_FOUND':'" + filename + "'}", status=404, mimetype='application/json')
+        return Response(
+            "{'NOT_FOUND':'" + filename + "'}",
+            status=404, mimetype='application/json')
 
 
 @data.route('/photos/<filename>', methods=["DELETE"])
@@ -39,9 +42,13 @@ def delete_photo(filename):
         os.remove(file_path)
         os.remove(thumb_path)
         if os.path.isfile(os.path.join(file_path)) is False:
-            return Response('{"SUCCESS": "' + filename + '"}', status=200, mimetype='application/json')
+            return Response(
+                '{"SUCCESS": "' + filename + '"}',
+                status=200, mimetype='application/json')
         else:
-            return Response('{"ERROR": "' + filename + '"}', status=500, mimetype='application/json')
+            return Response(
+                '{"ERROR": "' + filename + '"}',
+                status=500, mimetype='application/json')
 
 
 @data.route('/videos/<filename>')
@@ -49,11 +56,17 @@ def get_video(filename):
     file_path = current_app.user_config["videos_path"] + filename
     if os.path.isfile(os.path.join(file_path)):
         if filename.endswith(".jpg"):
-            return send_from_directory(os.path.join('static/data/videos'), filename, mimetype="image/jpg")
+            return send_from_directory(
+                os.path.join(
+                    'static/data/videos'), filename, mimetype="image/jpg")
         else:
-            return send_from_directory(os.path.join('static/data/videos'), filename, mimetype="video/mp4")
+            return send_from_directory(
+                os.path.join(
+                    'static/data/videos'), filename, mimetype="video/mp4")
     else:
-        return Response("{'NOT_FOUND':'" + filename + "'}", status=404, mimetype='application/json')
+        return Response(
+            "{'NOT_FOUND':'" + filename + "'}",
+            status=404, mimetype='application/json')
 
 
 @data.route('/videos/<filename>', methods=["DELETE"])
@@ -65,9 +78,13 @@ def delete_video(filename):
         os.remove(file_path)
         os.remove(thumb_path)
         if os.path.isfile(os.path.join(file_path)) is False:
-            return Response('{"SUCCESS": "' + filename + '"}', status=200, mimetype='application/json')
+            return Response(
+                '{"SUCCESS": "' + filename + '"}',
+                status=200, mimetype='application/json')
         else:
-            return Response('{"ERROR": "' + filename + '"}', status=500, mimetype='application/json')
+            return Response(
+                '{"ERROR": "' + filename + '"}',
+                status=500, mimetype='application/json')
 
 
 def get_all_files(app, src_path):

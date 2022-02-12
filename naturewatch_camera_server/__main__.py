@@ -14,7 +14,8 @@ class CameraNotFoundException(Exception):
 
 
 def is_camera_enabled():
-    # inspired by https://stackoverflow.com/questions/58250817/raspberry-pi-camera-module-check-if-connected#comment102874971_58250817
+    # inspired by https://stackoverflow.com/q/58250817/10949679
+    # See Mark Setchell's comment
     vcgencmd_result = subprocess.run(
         ['/opt/vc/bin/vcgencmd', 'get_camera'], stdout=subprocess.PIPE)
     result_text = vcgencmd_result.stdout.decode('utf-8').strip()
@@ -29,13 +30,16 @@ if __name__ == '__main__':
         app.change_detector.start()
     except Exception as e:
         if isinstance(e, PiCameraError) and "Camera is not enabled" in str(e):
-            # This error message appears even if the camera _is_ enabled, but the camera is not found.
+            # This error message appears even if the camera _is_ enabled,
+            # but the camera is not found.
             # e.g. due to a connection problem.
-            # We don't want to mislead users into messing with raspi-config, so check if the
+            # We don't want to mislead users into messing with raspi-config,
+            # so check if the
             # camera interface is really disabled.
             if (is_camera_enabled()):
                 e = CameraNotFoundException(
-                    "Unable to access camera. Is the cable properly connected?")
+                    "Unable to access camera."
+                    " Is the cable properly connected?")
 
         app = create_error_app(e)
 

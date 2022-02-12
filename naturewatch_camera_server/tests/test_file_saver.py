@@ -41,7 +41,8 @@ def test_image_save():
     THEN the image should exist in the file system and should not be empty
     """
     timestamp = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
-    filename = file_saver.save_image(app.camera_controller.get_md_image(), timestamp)
+    filename = file_saver.save_image(
+        app.camera_controller.get_md_image(), timestamp)
     assert os.path.isfile(app.user_config["photos_path"] + filename)
     assert os.path.getsize(app.user_config["photos_path"] + filename) != 0
     os.remove(app.user_config["photos_path"] + filename)

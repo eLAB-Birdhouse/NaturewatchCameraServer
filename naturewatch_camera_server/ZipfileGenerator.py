@@ -55,9 +55,11 @@ class ZipfileGenerator():
                     # or should it be solved by setting the system time
                     # with the browser time?
 
-                    with open(path['filename'], 'rb') as entry, zf.open(z_info, mode='w') as dest:
+                    with (open(path['filename'], 'rb') as entry,
+                          zf.open(z_info, mode='w') as dest):
 
-                        for chunk in iter(lambda: entry.read(self.chunk_size), b''):
+                        for chunk in iter(
+                                lambda: entry.read(self.chunk_size), b''):
                             dest.write(chunk)
                             # yield chunk of the zip file stream in bytes.
                             yield output.get()

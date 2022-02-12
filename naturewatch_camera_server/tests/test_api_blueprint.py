@@ -90,7 +90,8 @@ def test_post_settings(test_client):
         "Content-Type": "application/json",
         "Accept": "application/json"
     }
-    response = test_client.post('/api/settings', data=json.dumps(settings), headers=headers)
+    response = test_client.post(
+        '/api/settings', data=json.dumps(settings), headers=headers)
     assert response.status_code == 200
     response_dict = json.loads(response.data.decode('utf8'))
     assert "rotation" in response_dict
@@ -120,7 +121,8 @@ def test_session_photo(test_client):
     """
     GIVEN a Flask application
     WHEN '/api/session/start/photo' is requested (POST)
-    THEN photo session should start and new status object should be returned. Session should then be stopped.
+    THEN photo session should start and new status object should be returned.
+    Session should then be stopped.
     """
     response = test_client.post('/api/session/start/photo')
     assert response.status_code == 200
@@ -139,7 +141,8 @@ def test_session_video(test_client):
     """
     GIVEN a Flask application
     WHEN '/api/session/start/video' is requested (POST)
-    THEN video session should start and new status object should be returned. Session should then be stopped.
+    THEN video session should start and new status object should be returned.
+    Session should then be stopped.
     """
     response = test_client.post('/api/session/start/video')
     assert response.status_code == 200

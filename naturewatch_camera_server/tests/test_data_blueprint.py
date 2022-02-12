@@ -34,8 +34,10 @@ def test_client():
     # Take photos and record their filenames
     for x in range(2):
         timestamp = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
-        thumb = file_saver.save_thumb(app.camera_controller.get_md_image(), timestamp, "photo")
-        filename = file_saver.save_image(app.camera_controller.get_hires_image(), timestamp)
+        thumb = file_saver.save_thumb(
+            app.camera_controller.get_md_image(), timestamp, "photo")
+        filename = file_saver.save_image(
+            app.camera_controller.get_hires_image(), timestamp)
         photos_list.append(filename)
         photos_thumb_list.append(thumb)
         time.sleep(1)
@@ -45,10 +47,12 @@ def test_client():
     for y in range(2):
         timestamp = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
         time.sleep(2)
-        thumb = file_saver.save_thumb(app.camera_controller.get_md_image(), timestamp, "video")
+        thumb = file_saver.save_thumb(
+            app.camera_controller.get_md_image(), timestamp, "video")
         app.camera_controller.wait_recording(2)
         with app.camera_controller.get_video_stream().lock:
-            filename = file_saver.save_video(app.camera_controller.get_video_stream(), timestamp)
+            filename = file_saver.save_video(
+                app.camera_controller.get_video_stream(), timestamp)
             videos_list.append(filename)
             videos_thumb_list.append(thumb)
             time.sleep(1)

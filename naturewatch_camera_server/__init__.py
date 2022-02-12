@@ -2,9 +2,9 @@
 import json
 import logging
 import os
-import sys
+# import sys
 from shutil import copyfile
-from logging.handlers import RotatingFileHandler
+# from logging.handlers import RotatingFileHandler
 from naturewatch_camera_server.CameraController import CameraController
 from naturewatch_camera_server.ChangeDetector import ChangeDetector
 from naturewatch_camera_server.FileSaver import FileSaver
@@ -39,30 +39,33 @@ def create_app():
     flask_app.user_config = json.load(
         open(os.path.join(module_path, "config.json")))
 
-    # Check if a config file exists in data directory
-    if os.path.isfile(os.path.join(module_path, flask_app.user_config["data_path"], 'config.json')):
-        # if yes, load that file, too
+    # Check if a config file exists in data directory.
+    if os.path.isfile(os.path.join(
+            module_path, flask_app.user_config["data_path"], 'config.json')):
+        # If yes, load that file, too.
         flask_app.logger.info("Using config file from data context")
-        flask_app.user_config = json.load(open(os.path.join(module_path,
-                                                            flask_app.user_config["data_path"],
-                                                            'config.json')))
+        flask_app.user_config = json.load(open(os.path.join(
+            module_path, flask_app.user_config["data_path"], 'config.json')))
     else:
         # if not, copy central config file to data directory
         flask_app.logger.warning(
             "Config file does not exist within the data context, copying file")
         copyfile(os.path.join(module_path, "config.json"),
-                 os.path.join(module_path, flask_app.user_config["data_path"], "config.json"))
+                 os.path.join(module_path, flask_app.user_config["data_path"],
+                 "config.json"))
 
     # Set up logging to file
     file_handler = logging.handlers.RotatingFileHandler(os.path.join(
-        module_path, flask_app.user_config["data_path"], 'camera.log'), maxBytes=1024000, backupCount=5)
+        module_path, flask_app.user_config["data_path"], 'camera.log'),
+        maxBytes=1024000, backupCount=5)
     file_handler.setLevel(logging.INFO)
     numeric_loglevel = getattr(
         logging, flask_app.user_config["log_level"].upper(), None)
 
     if not isinstance(numeric_loglevel, int):
         flask_app.logger.info(
-            'Invalid log level {0} in config file: %s'.format(self.config["log_level"]))
+            'Invalid log level {0} in config file: %s'.format(
+                self.config["log_level"]))
 
     else:
         file_handler.setLevel(numeric_loglevel)
@@ -102,7 +105,7 @@ def create_app():
     return flask_app
 
 
-def create_error_app(e):
+def create_error_app(error: str):
     """
     Create flask app about an error occurred in the main app
     :return: Flask app object
@@ -111,6 +114,7 @@ def create_error_app(e):
 
     @flask_app.route('/')
     def index():
-        return f"<html><body><h1>Unable to start NaturewatchCameraServer.</h1>An error occurred:<pre>{e}</pre></body></html>"
+        return ("<html><body><h1>Unable to start NaturewatchCameraServer."
+                f"</h1>An error occurred:<pre>{error}</pre></body></html>")
 
     return flask_app

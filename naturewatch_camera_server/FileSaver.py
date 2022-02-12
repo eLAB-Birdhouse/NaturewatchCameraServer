@@ -75,8 +75,9 @@ class FileSaver(Thread):
             try:
                 cv2.imwrite(os.path.join(
                     self.config["photos_path"], filename), image)
-                self.logger.info("FileSaver: saved file to " +
-                                 os.path.join(self.config["photos_path"], filename))
+                self.logger.info(
+                    "FileSaver: saved file to " +
+                    os.path.join(self.config["photos_path"], filename))
                 return filename
             except Exception as e:
                 self.logger.error('FileSaver: save_photo() error: ')
@@ -95,12 +96,17 @@ class FileSaver(Thread):
         try:
             if media_type in ["photo", "timelapse"]:
                 # TODO: Build a proper downscaling routine for the thumbnails
-                #                self.logger.debug('Scaling by a factor of {}'.format(self.thumbnail_factor))
-                #                thumb = cv2.resize(image, 0, fx=self.thumbnail_factor, fy=self.thumbnail_factor, interpolation=cv2.INTER_AREA)
+                # self.logger.debug(
+                #     f'Scaling by a factor of {self.thumbnail_factor}')
+                # thumb = cv2.resize(
+                #     image, 0, fx=self.thumbnail_factor,
+                #     fy=self.thumbnail_factor,
+                #     interpolation=cv2.INTER_AREA)
                 cv2.imwrite(os.path.join(
                     self.config["photos_path"], filename), image)
-                self.logger.info("FileSaver: saved thumbnail to " +
-                                 os.path.join(self.config["photos_path"], filename))
+                self.logger.info(
+                    "FileSaver: saved thumbnail to " +
+                    os.path.join(self.config["photos_path"], filename))
             else:
                 cv2.imwrite(os.path.join(
                     self.config["videos_path"], filename), image)
