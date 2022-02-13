@@ -1,5 +1,5 @@
 import pytest
-import sys
+# import sys
 import json
 import time
 import datetime

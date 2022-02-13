@@ -1,6 +1,6 @@
 from threading import Thread
 import cv2
-import io
+# import io
 import logging
 import os
 import datetime

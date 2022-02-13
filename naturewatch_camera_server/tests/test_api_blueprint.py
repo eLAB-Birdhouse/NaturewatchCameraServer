@@ -1,5 +1,5 @@
 import pytest
-import sys
+# import sys
 import json
 import time
 from naturewatch_camera_server import create_app

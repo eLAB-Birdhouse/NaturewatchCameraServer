@@ -2,7 +2,7 @@ import threading
 import cv2
 import imutils
 import time
-import logging
+# import logging
 import io
 import json
 import numpy as np

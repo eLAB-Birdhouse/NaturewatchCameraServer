@@ -4,7 +4,7 @@ from threading import Thread
 from datetime import datetime
 import time
 import imutils
-import logging
+# import logging
 from naturewatch_camera_server.FileSaver import FileSaver
 
 

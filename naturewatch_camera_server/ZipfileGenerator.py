@@ -1,7 +1,7 @@
 from io import RawIOBase
-from zipfile import ZipFile, ZipInfo, ZIP_DEFLATED
+from zipfile import ZipFile, ZipInfo  # , ZIP_DEFLATED
 
-import os
+# import os
 
 
 class ZipfileGenerator():
