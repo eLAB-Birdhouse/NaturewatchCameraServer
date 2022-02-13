@@ -7,8 +7,8 @@ RUN apt-get install -y gpac python3 python3-pip python3-opencv python3-dev pytho
 # COPY requirements-dev.txt .
 COPY requirements-pi.txt .
 COPY requirements.txt .
-RUN python3 -m pip install pip setuptools wheel  --upgrade
-RUN python3 -m pip install opencv-python --upgrade
+RUN python3 -m pip install pip setuptools wheel --upgrade
+# RUN python3 -m pip install opencv-python --upgrade
 RUN python3 -m pip install -r requirements-pi.txt
 # RUN python3 -m pip install -r requirements-dev.txt
 
