@@ -4,7 +4,7 @@ import logging
 import os
 # import sys
 from shutil import copyfile
-# from logging.handlers import RotatingFileHandler
+from logging.handlers import RotatingFileHandler
 from naturewatch_camera_server.CameraController import CameraController
 from naturewatch_camera_server.ChangeDetector import ChangeDetector
 from naturewatch_camera_server.FileSaver import FileSaver

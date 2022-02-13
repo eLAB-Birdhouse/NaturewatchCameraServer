@@ -17,7 +17,7 @@ def is_camera_enabled():
     # inspired by https://stackoverflow.com/q/58250817/10949679
     # See Mark Setchell's comment
     vcgencmd_result = subprocess.run(
-        ['/opt/vc/bin/vcgencmd', 'get_camera'], stdout=subprocess.PIPE)
+        ['vcgencmd', 'get_camera'], stdout=subprocess.PIPE)
     result_text = vcgencmd_result.stdout.decode('utf-8').strip()
     properties = dict(pair.split('=') for pair in result_text.split(' '))
     return properties['supported'] == '1'
