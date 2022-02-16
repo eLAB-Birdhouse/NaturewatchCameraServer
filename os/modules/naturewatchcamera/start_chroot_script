@@ -41,6 +41,7 @@ echo "$NATUREWATCHCAMERA_VAR"
 #  python -m pip install -U pip numpy
  echo "Installing OpenCV"
  python3 -m pip install -U pip numpy opencv-python-headless
+ raspi-config nonint do_legacy 0
 
 pushd /home/pi
 	pushd NaturewatchCameraServer
