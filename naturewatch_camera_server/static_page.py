@@ -19,11 +19,6 @@ def serve(path):
             os.path.join(current_app.static_folder, path)):
         return send_from_directory(current_app.static_folder, path)
     elif path == "" or "gallery" in path:
-        # return send_from_directory(current_app.static_folder, 'index.html')
-        print(current_app.static_folder)
-        print(current_app.template_folder)
-        # print(version_date, version_hash)
-        print(os.listdir(current_app.static_folder))
         return render_template(
             'index.html',
             version_hash=version_hash,
