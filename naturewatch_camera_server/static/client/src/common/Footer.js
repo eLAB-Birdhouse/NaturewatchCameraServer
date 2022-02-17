@@ -30,7 +30,7 @@ const Footer = () => {
                             <FooterText id='version_date'>date</FooterText>
                         </Column>
                         <Column>
-                            <FooterLink href="/api/version/redirect_to/commit_url">Commit hash</FooterLink>
+                            <FooterLink href="/api/version/redirect_to/commit_url">Commit (short) hash</FooterLink>
                             <FooterText id='version_hash'>hash</FooterText>
                         </Column>
                         <Column>

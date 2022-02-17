@@ -19,7 +19,8 @@ def create_app():
     Create flask app
     :return: Flask app object
     """
-    flask_app = Flask(__name__, static_folder="static/client/build")
+    flask_app = Flask(__name__, static_folder="static/client/build",
+                      template_folder="static/client/build")
     flask_app.register_blueprint(api, url_prefix='/api')
     flask_app.register_blueprint(data, url_prefix='/data')
     flask_app.register_blueprint(static_page)
