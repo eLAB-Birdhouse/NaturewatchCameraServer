@@ -1,8 +1,7 @@
 # TODO: create "getSpace" api call when filesaver is global
 
 
-from flask import Blueprint, Response, request, json
-from flask import current_app
+from flask import Blueprint, Response, request, json, current_app, redirect
 import time
 import subprocess
 
@@ -217,7 +216,10 @@ def update_time(time_string):
 
 @api.route('/version')
 @api.route('/version/<argument>')
-def get_version(argument: str = 'date'):
+@api.route('/version/redirect_to/<destination>')
+def get_version(argument: str = 'date', destination: str = ''):
+    if destination != '' and 'url' in destination:
+        return redirect(get_version(destination))
     if argument == 'hash':
         return git('rev-parse', 'HEAD')
     if argument == 'short_hash':
@@ -236,6 +238,27 @@ def get_version(argument: str = 'date'):
 
 def git(*parameters: str):
     command = ['git']
+    command.extend(parameters)
+
+    git_result = subprocess.run(command, stdout=subprocess.PIPE)
+    return git_result.stdout.decode('utf-8').replace('\n', '')
+
+
+@api.route('/reboot')
+def reboot():
+    # TODO: redirect to / after 1 or 2 minutes.
+    return maintenance('reboot')
+
+
+@api.route('/shutdown')
+def shutdown():
+    # TODO: announce shutdown
+    return maintenance('shutdown', 'now')
+
+
+def maintenance(*parameters: str):
+    # The service is already started has root...
+    command = ['sudo']
     command.extend(parameters)
 
     git_result = subprocess.run(command, stdout=subprocess.PIPE)

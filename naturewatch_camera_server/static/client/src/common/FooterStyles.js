@@ -55,6 +55,13 @@ text-decoration: none;
 }
 `;
 
+export const FooterText = styled.p `
+color: #9ca2a6;
+margin-bottom: 10px;
+font-size: 15px;
+text-decoration: none;
+`;
+
 export const Heading = styled.p `
 font-size: 24px;
 color: #fff;

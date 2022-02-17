@@ -33,7 +33,7 @@ class Index extends React.Component {
     }
 
     componentDidMount() {
-        // Get session object form camera
+        // Get session object from camera
         axios.get('/api/session')
             .then((res) => {
                 const status = res.data;
