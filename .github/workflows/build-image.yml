@@ -24,10 +24,11 @@ jobs:
         repository: ${{ github.repository }}
         path: repository
 
-    - name: Setup node
-      uses: actions/setup-node@v1
+    - name: Setup Nodejs
+      uses: actions/setup-node@v2
       with:
-        node-version: 12.x
+        node-version: 16.x
+        cache: 'npm'
 
     - name: Build React frontend
       run: |
