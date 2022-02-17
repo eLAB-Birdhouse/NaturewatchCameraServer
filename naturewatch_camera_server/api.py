@@ -4,9 +4,7 @@
 from flask import Blueprint, Response, request, json
 from flask import current_app
 import time
-# import json
-# import os
-# import subprocess
+import subprocess
 
 api = Blueprint('api', __name__)
 
@@ -215,3 +213,30 @@ def update_time(time_string):
         return Response(
             '{"NOT_MODIFIED": "' + time_string + '"}',
             status=304, mimetype='application/json')
+
+
+@api.route('/version')
+@api.route('/version/<argument>')
+def get_version(argument: str = 'date'):
+    if argument == 'hash':
+        return git('rev-parse', 'HEAD')
+    if argument == 'short_hash':
+        return git('rev-parse', '--short', 'HEAD')
+    elif argument == 'url':
+        return git('remote', 'get-url', 'origin')
+    elif argument == 'commit_url':
+        url = git('remote', 'get-url', 'origin')
+        url = url[:-4]
+        commit_hash = git('rev-parse', 'HEAD')
+        return f'{url}/commit/{commit_hash}'
+    else:  # argument == 'date'
+        commit_hash = git('rev-parse', 'HEAD')
+        return git('show', '-s', r'--format=%ci', commit_hash)
+
+
+def git(*parameters: str):
+    command = ['git']
+    command.extend(parameters)
+
+    git_result = subprocess.run(command, stdout=subprocess.PIPE)
+    return git_result.stdout.decode('utf-8').replace('\n', '')
