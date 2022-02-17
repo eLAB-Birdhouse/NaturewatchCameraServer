@@ -17,24 +17,24 @@ const Footer = () => {
                 textAlign: "center",
                 marginTop: "-50px"
             }}>
-                My Nature Watch
+                electroLAB - Birdhouse
             </h1>
             <Container>
                 <Column>
                     <Row>
-                        <Heading>Project information</Heading>
+                        <Heading>Informations</Heading>
                     </Row>
                     <Row>
                         <Column>
-                            <FooterLink href="/api/version/date">Version date</FooterLink>
+                            <FooterLink href="/api/version/date">Date de version</FooterLink>
                             <FooterText id='version_date'>date</FooterText>
                         </Column>
                         <Column>
-                            <FooterLink href="/api/version/redirect_to/commit_url">Commit (short) hash</FooterLink>
+                            <FooterLink href="/api/version/redirect_to/commit_url">Commit hash (court)</FooterLink>
                             <FooterText id='version_hash'>hash</FooterText>
                         </Column>
                         <Column>
-                            <FooterLink href="/api/version/redirect_to/url">Project repository</FooterLink>
+                            <FooterLink href="/api/version/redirect_to/url">Répertoire du projet</FooterLink>
                         </Column>
                     </Row>
                 </Column>
@@ -44,10 +44,10 @@ const Footer = () => {
                     </Row>
                     <Row>
                         <Column>
-                            <FooterLink href="/api/reboot">Reboot</FooterLink>
+                            <FooterLink href="/api/reboot">Redémarrer</FooterLink>
                         </Column>
                         <Column>
-                            <FooterLink href="/api/shutdown">Shutdown</FooterLink>
+                            <FooterLink href="/api/shutdown">Éteindre</FooterLink>
                         </Column>
                     </Row>
                 </Column>
