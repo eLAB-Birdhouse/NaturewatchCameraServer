@@ -37,7 +37,7 @@ echo "$NATUREWATCHCAMERA_VAR"
                         gfortran \
                         python2.7-dev python3-dev python3-pip python python3
  apt-get install -y libilmbase25 libopenexr-dev libgstreamer1.0-dev
- apt-get install -y gpac
+ apt-get install -y gpac git
 #  python -m pip install -U pip numpy
  echo "Installing OpenCV"
  python3 -m pip install -U pip numpy opencv-python-headless
