@@ -219,7 +219,7 @@ class Index extends React.Component {
                     element={document}
                     onIdle={this.onIdle}
 		            debounce={250}
-                    timeout={1000 * 60}
+                    timeout={1000 * 3600 * 24 * 7}
                 />
             </div>
         );
