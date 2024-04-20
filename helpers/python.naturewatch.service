@@ -3,7 +3,7 @@ Description=electroLAB Birdhouse Server
 After=multi-user.target
 
 [Service]
-ExecStart=/usr/bin/python3 -m naturewatch_camera_server -p 80
+ExecStart=/home/pi/NaturewatchCameraServer/.venv/bin/python -m naturewatch_camera_server -p 80
 WorkingDirectory=/home/pi/NaturewatchCameraServer
 Restart=on-failure
 User=root
